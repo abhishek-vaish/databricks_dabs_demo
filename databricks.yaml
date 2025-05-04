@@ -1,0 +1,12 @@
+bundle:
+  name: databricks_dabs_demo
+
+include:
+  - ./resources/jobs/*.yaml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}

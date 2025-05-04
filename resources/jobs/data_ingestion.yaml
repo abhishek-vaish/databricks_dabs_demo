@@ -1,0 +1,21 @@
+resources:
+  jobs:
+    data_ingestion:
+      name: ${bundle.target}_data_ingestion
+      tasks:
+        - task_key: ingest_bronze_data
+          notebook_task:
+            notebook_path: ../../src/bronze/ingest_bronze_table.ipynb
+        - task_key: ingest_silver_data
+          depends_on: 
+              - task_key: ingest_bronze_data
+          notebook_task:
+            notebook_path: ../../src/silver/ingest_silver_table.ipynb
+        - task_key: ingest_gold_data
+          depends_on: 
+              - task_key: ingest_silver_data
+          notebook_task:
+            notebook_path: ../../src/gold/ingest_gold_table.ipynb
+      parameters:
+        - name: environment
+          default: ${bundle.target} 
